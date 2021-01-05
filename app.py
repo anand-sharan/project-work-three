@@ -44,10 +44,11 @@ def init_browser():
 import warnings
 warnings.filterwarnings('ignore')
 
+import os
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func, inspect
+from sqlalchemy.orm import Session, load_only
+from sqlalchemy import create_engine, func, inspect, distinct
 
 # Imports the methods needed to abstract classes into tables
 from sqlalchemy.ext.declarative import declarative_base
@@ -181,7 +182,7 @@ app = Flask(__name__)
 
 # create route that renders index.html template
 @app.route("/")
-def home():
+def index():
     return render_template("index.html")
 
 # Query the database and send the jsonified results

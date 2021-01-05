@@ -589,7 +589,7 @@ function formatValue(value, type) {
 // get county paths and election data
 Promise.all([
     d3.json("https://unpkg.com/us-atlas@1/us/10m.json"),
-    d3.csv(`Resources/${selectedYear}_US_County_Level_Presidential_Results.csv`)
+    d3.csv(`/Resources/${selectedYear}_US_County_Level_Presidential_Results.csv`)
 ]).then(resp => {
     createViz(resp[0], resp[1])
 }).catch(e => {

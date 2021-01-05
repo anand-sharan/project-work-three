@@ -1,39 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Pet Pals!</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/styles.css"/>
+ 
+    <title>USA Presidential Results from 2016 and 2020</title>
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
 </head>
+<body class="body1">
+
+<!-- Our rows function in containers (grid created). -->
+<!--<div class="container">-->
+<!--BEGIN DIV CLASSES-->
 
 <body>
-    <div class="container">
-        <div class="jumbotron" style="text-align: center">
-            <h1>Pet Pal</h1>
-            <p>Find your pet a pal!</p>
-        </div>
+        <nav class="navbar navbar-default">
+                <div class="container">
+                    <!--BEGIN ACTIVE NAVIGATION-->
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="index.html"> 
+                        <span class="nav-color navbaractive">USA Presidential Results</span></a>
+                    </div>
+                    <!--END ACTIVE NAVIGATION-->
+        
+                    
+                    <div class="nav navbar-nav navbar-right">
+                        <!--BEGIN DROP DOWN NAV-->
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Plots<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="election_results.html">Election results</a></li>
+                                <li><a href="demographics.html">Voter Turnout and Demographics</a></li>
+                                <li><a href="state_trends.html">State Trends</a></li>
+                            </ul>
+                        </li>
+                        <!--END DROP DOWN NAV-->
+                    </div>
+        
+                </div>      
+            </nav>
+            <!--DIVIDER ROWS-->
 
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Look at all of the current pet pals!</h2>
-                <div id="plot"></div>
+        <div class= "container">
+            <div class= "row">
+                <div class= "col-md-6">
+                    <div class="main-box whiteback">
+                    <h1>Summary: USA Elections</h1>
+                    <hr>
+                    <div id="summarytext">
+                        <img id= "landingimage" src= "/Images/election2020.png" alt= "Election results">
+                        <p>
+                            The purpose of this project was to Analysis of US Presidential Results of 2016 and 2020 to find trends in voting patterns and identify possible reasons for those trends.
+                            <br><br>
+                            After Web Scraping the dataset, we used HTML, SVG, D3, Chloropeth JS library and Anime JS library to plot various aspects of the USA Election results. 
+                            Factors we looked at included: Voter Turnout, Household Income, Median Age, and Poverty.
+                            This site provides the visualizations created as part of the analysis, 
+                            as well as explanations and descriptions of any trends and correlations observed.
+                        </p>
+                    </div>
+                    </div>
+                </div>
+                <div class= "col-md-6">
+                    <div class= "side-box">
+                    <h2 class= "main-pg-subheader">Visualizations</h2>
+                    <hr>
+                    <div class= "sidebar">
+                        <a href= "election_results.html"><img id= "side-img1" src="/Images/election2020.png" alt= "Election results"></a>
+                        <a href= "demographics.html"><img id= "side-img2" src= "/Images/demographics.png", alt= "Voter Turnout and Demographics"></a>
+                        <a href= "state_trends.html"><img id= "side-img3" src= "/Images/database_connection.png", alt= "State Trends"></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <h2><a href="/send">Add your pet here!</a></h2>
-            </div>
-        </div>
-    </div>
+<!--END DIV CLASSES-->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
-
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
-
+ 
 </html>

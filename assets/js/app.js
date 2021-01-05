@@ -160,7 +160,7 @@ function makeResponsive() {
     }
   
     // Import Data from the data.csv File & Execute Everything Below
-    d3.csv("assets/data/data.csv")
+    d3.csv("/assets/data/data.csv")
       .then(function(acsData) {
   
       // Format/Parse the Data (Cast as Numbers)
