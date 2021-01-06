@@ -102,7 +102,7 @@ conn = engine.connect()
 
 # Use this to clear out the db
 # ----------------------------------
-Base.metadata.drop_all(engine)
+#Base.metadata.drop_all(engine)
 
 # ----------------------------------
 # Create (if not already in existence) the tables associated with our classes.
@@ -190,12 +190,7 @@ def index():
 # Scrape Data for 2016 and API data for 2020
 @app.route("/scrape")
 def data():
-    #if request.method == "POST":
-    #    name = request.form["petName"]
-    #    lat = request.form["petLat"]
-    #    lon = request.form["petLon"]
 
-    #    pet = Pet(name=name, lat=lat, lon=lon)
     try:
         api_2020_data.api_2020()
         print("2020 data preparation successful")
@@ -210,7 +205,7 @@ def data():
 
     return redirect("/", code=302)
 
-    return render_template("index.html")
+    #return render_template("index.html")
 
 @app.route("/election_results")
 def election_results():
@@ -229,29 +224,6 @@ def swing():
 @app.route("/voter_turnouts")
 def voter_turnouts():
     return render_template("voter_turnouts.html")
-    #results = session.query(Pet.name, Pet.lat, Pet.lon).all()
-
-    #hover_text = [result[0] for result in results]
-    #lat = [result[1] for result in results]
-    #lon = [result[2] for result in results]
-    #print(hover_text)
-    #pet_data = [{
-    #    "type": "scattergeo",
-    #    "locationmode": "USA-states",
-    #    "lat": lat,
-    #    "lon": lon,
-    #    "text": hover_text,
-    #    "hoverinfo": "text",
-    #    "marker": {
-    #        "size": 50,
-    #        "line": {
-    #            "color": "rgb(8,8,8)",
-    #            "width": 1
-    #        },
-    #    }
-    #}]
-    #print(pet_data)
-    #return jsonify(pet_data)
 
 if __name__ == "__main__":
     app.run(debug=True)
