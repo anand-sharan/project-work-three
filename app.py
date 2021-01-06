@@ -218,6 +218,7 @@ def election_results():
 
 @app.route("/demographics")
 def demographics():
+    print(os.getcwd())
     #demographic_datapath = {'path': '/static/assets/data/data.csv'}
     return render_template("demographics.html")
 
