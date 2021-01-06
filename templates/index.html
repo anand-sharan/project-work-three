@@ -50,10 +50,10 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown">Plots<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="election_results.html">Election results</a></li>
-                                <li><a href="demographics.html">Voter Turnout and Demographics</a></li>
-                                <li><a href="swing.html">Swing Analysis</a></li>
-                                <li><a href="voter_turnouts.html">Voter Turnout and Party Analysis</a></li>
+                                <li><a href="/election_results">Election results</a></li>
+                                <li><a href="/demographics">Voter Turnout and Demographics</a></li>
+                                <li><a href="/swing">Swing Analysis</a></li>
+                                <li><a href="/voter_turnouts">Voter Turnout and Party Analysis</a></li>
                             </ul>
                         </li>
                         <!--END DROP DOWN NAV-->
@@ -105,7 +105,9 @@
                               });</script>
                     <hr>
                     <div id="summarytext">
-                        <img id= "landingimage" src= "/Images/election2020.png" alt= "Election results">
+                        <img id= "landingimage" src= {{ url_for('static', filename = '/images/election2020.png') }} alt= "Election results">
+
+                        <!--src= "static/images/election2020.png" -->
                         <p>
                             The purpose of this project was to Analysis of US Presidential Results of 2016 and 2020 to find trends in voting patterns and identify possible reasons for those trends.
                             <br><br>
@@ -113,7 +115,7 @@
                             Factors we looked at included: Voter Turnout, Household Income, Median Age, and Poverty.
                             This site provides the visualizations created as part of the analysis, 
                             as well as explanations and descriptions of any trends and correlations observed.
-                        </p>
+                        </p><p><a class="btn btn-danger btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
                     </div>
                     </div>
                 </div>
@@ -122,10 +124,10 @@
                     <h2 class= "main-pg-subheader">Visualizations</h2>
                     <hr>
                     <div class="sidebar">
-                        <a href="election_results.html"><img id="side-img1" src="/Images/election2020.png" alt="Election results"></a>
-                        <a href="demographics.html"><img id="side-img2" src="/Images/demographics.png", alt="Voter Turnout and Demographics"></a>
-                        <a href="swing.html"><img id="side-img3" src="/Images/Battleground.png", alt="Swing Analysis"></a>
-                        <a href="voter_turnouts.html"><img id="side-img4" src="/Images/OverallVoterTurnout.png", alt="Voter Turnout and Party Analysis"></a>
+                        <a href="/election_results"><img id="side-img1" src= {{ url_for('static', filename = '/images/election2020.png') }} alt="Election results"></a>
+                        <a href="/demographics"><img id="side-img2" src= {{ url_for('static', filename = '/images/demographics.png') }} alt="Voter Turnout and Demographics"></a>
+                        <a href="/swing"><img id="side-img3" src= {{ url_for('static', filename = '/images/Battleground.png') }} alt="Swing Analysis"></a>
+                        <a href="/voter_turnouts"><img id="side-img4" src= {{ url_for('static', filename = '/images/OverallVoterTurnout.png') }} alt="Voter Turnout and Party Analysis"></a>
                         </div>
                     </div>
                 </div>

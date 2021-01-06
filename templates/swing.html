@@ -40,7 +40,7 @@
         <div class="container">
             <!--BEGIN ACTIVE NAVIGATION-->
             <div class="navbar-header">
-                <a class="navbar-brand" href="index.html"> 
+                <a class="navbar-brand" href="/"> 
                 <span class="nav-color navbaractive">USA Presidential Results</span></a>
             </div>
             <!--END ACTIVE NAVIGATION-->
@@ -51,10 +51,10 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown">Plots<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="election_results.html">Election results</a></li>
-                        <li><a href="demographics.html">Voter Turnout and Demographics</a></li>
-                        <li><a href="swing.html">Swing Analysis</a></li>
-                        <li><a href="voter_turnouts.html">Voter Turnout and Party Analysis</a></li>
+                        <li><a href="/election_results">Election results</a></li>
+                        <li><a href="/demographics">Voter Turnout and Demographics</a></li>
+                        <li><a href="/swing">Swing Analysis</a></li>
+                        <li><a href="/voter_turnouts">Voter Turnout and Party Analysis</a></li>
                     </ul>
                 </li>
                 <!--END DROP DOWN NAV-->
@@ -107,21 +107,21 @@
         <div class="row">
           <div class="col-xs-12  col-md-9">
             <div id="result1">
-                <img id="result-img1" src="/Images/Battleground.png" alt="Battleground State Voter Turnout change from 2016 to 2020">
+                <img id="result-img1" src= {{ url_for('static', filename = '/images/Battleground.png') }} alt="Battleground State Voter Turnout change from 2016 to 2020">
             </div>
           </div>
         </div>
         <div class="row">
             <div class="col-xs-12  col-md-9">
               <div id="result2">
-                  <img id="result-img2" src="/Images/DemGOP2016.png" alt="Democrats vs Republican Voters 2016">
+                  <img id="result-img2" src= {{ url_for('static', filename = '/images/DemGOP2016.png') }} alt="Democrats vs Republican Voters 2016">
               </div>
             </div>
           </div>
        <div class="row">
             <div class="col-xs-12  col-md-9">
                 <div id="result3">
-                <img id="result-img3" src="/Images/DemGOP2020.png" alt="Democrats vs Republican Voters 2020">
+                <img id="result-img3" src= {{ url_for('static', filename = '/images/DemGOP2020.png') }} alt="Democrats vs Republican Voters 2020">
             </div>
         </div>
        </div>

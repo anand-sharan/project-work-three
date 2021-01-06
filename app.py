@@ -18,6 +18,8 @@ from dateutil.relativedelta import relativedelta
 
 import json
 
+import scrape_2016_data
+import api_2020_data
 #################################################
 # Mac
 #################################################
@@ -185,51 +187,70 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-# Query the database and send the jsonified results
-@app.route("/send", methods=["GET", "POST"])
-def send():
-    if request.method == "POST":
-        name = request.form["petName"]
-        lat = request.form["petLat"]
-        lon = request.form["petLon"]
+# Scrape Data for 2016 and API data for 2020
+@app.route("/scrape")
+def data():
+    #if request.method == "POST":
+    #    name = request.form["petName"]
+    #    lat = request.form["petLat"]
+    #    lon = request.form["petLon"]
 
-        pet = Pet(name=name, lat=lat, lon=lon)
-        try:
-            session.add(pet)
-            session.commit()
-        except:
-            session.rollback()
-            raise
+    #    pet = Pet(name=name, lat=lat, lon=lon)
+    try:
+        api_2020_data.api_2020()
+        print("2020 data preparation successful")
+    except:
+        print("2020 data preparation unsuccessful")
 
-        return redirect("/", code=302)
+    try:
+        scrape_2016_data.scrape_2016()
+        print("2016 data preparation successful")
+    except:
+        print("2016 data preparation unsuccessful")
 
-    return render_template("form.html")
+    return redirect("/", code=302)
 
-@app.route("/api/pals")
-def pals():
-    results = session.query(Pet.name, Pet.lat, Pet.lon).all()
+    return render_template("index.html")
 
-    hover_text = [result[0] for result in results]
-    lat = [result[1] for result in results]
-    lon = [result[2] for result in results]
-    print(hover_text)
-    pet_data = [{
-        "type": "scattergeo",
-        "locationmode": "USA-states",
-        "lat": lat,
-        "lon": lon,
-        "text": hover_text,
-        "hoverinfo": "text",
-        "marker": {
-            "size": 50,
-            "line": {
-                "color": "rgb(8,8,8)",
-                "width": 1
-            },
-        }
-    }]
-    print(pet_data)
-    return jsonify(pet_data)
+@app.route("/election_results")
+def election_results():
+    return render_template("election_results.html")
+
+@app.route("/demographics")
+def demographics():
+    #demographic_datapath = {'path': '/static/assets/data/data.csv'}
+    return render_template("demographics.html")
+
+@app.route("/swing")
+def swing():
+    return render_template("swing.html")
+
+@app.route("/voter_turnouts")
+def voter_turnouts():
+    return render_template("voter_turnouts.html")
+    #results = session.query(Pet.name, Pet.lat, Pet.lon).all()
+
+    #hover_text = [result[0] for result in results]
+    #lat = [result[1] for result in results]
+    #lon = [result[2] for result in results]
+    #print(hover_text)
+    #pet_data = [{
+    #    "type": "scattergeo",
+    #    "locationmode": "USA-states",
+    #    "lat": lat,
+    #    "lon": lon,
+    #    "text": hover_text,
+    #    "hoverinfo": "text",
+    #    "marker": {
+    #        "size": 50,
+    #        "line": {
+    #            "color": "rgb(8,8,8)",
+    #            "width": 1
+    #        },
+    #    }
+    #}]
+    #print(pet_data)
+    #return jsonify(pet_data)
 
 if __name__ == "__main__":
     app.run(debug=True)
