@@ -46,7 +46,7 @@ def init_browser():
 import warnings
 warnings.filterwarnings('ignore')
 
-import os
+import os, csv
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session, load_only
@@ -150,7 +150,7 @@ for column in columns:
     print(column["name"], column["type"])
 
 # Use `engine.execute` to select and display the first 10 rows from the measurement table
-engine.execute('SELECT * FROM us_election_results LIMIT 10').fetchall()
+print(engine.execute('SELECT * FROM us_election_results LIMIT 10').fetchall())
 
 # Display the column names of measurement
 # columns = inspector.get_columns('us_election_results')
@@ -169,9 +169,6 @@ print(Base.classes.keys())
 # Save reference to the table
 #Pet = Base.classes.pets
 UsElectionResult = Base.classes.us_election_results
-
-# Create our session (link) from Python to the DB
-#session = Session(engine)
 
 #################################################
 # Flask Setup
@@ -202,6 +199,91 @@ def data():
         print("2016 data preparation successful")
     except:
         print("2016 data preparation unsuccessful")
+
+    # Create the inspector and connect it to the engine
+    inspector = inspect(engine)
+
+    # Collect the names of tables within the database
+    inspector.get_table_names()
+
+    # Display the column names of pets
+    columns = inspector.get_columns('us_election_results')
+    for column in columns:
+        print(column["name"], column["type"])
+
+    # Use `engine.execute` to select and display the first 10 rows from the measurement table
+    print(engine.execute('SELECT * FROM us_election_results LIMIT 10').fetchall())
+
+    # Display the column names of measurement
+    # columns = inspector.get_columns('us_election_results')
+    # for column in columns:
+    #    print(column["name"], column["type"])
+
+    # Reflect an existing database into a new model
+    Base = automap_base()
+
+    # Reflect the tables
+    Base.prepare(engine, reflect=True)
+
+    # We can view all of the classes that automap found
+    print(Base.classes.keys())
+    # Use this to clear out the db
+    # ----------------------------------
+    Base.metadata.drop_all(engine)
+
+    # ----------------------------------
+    # Create (if not already in existence) the tables associated with our classes.
+    Base.metadata.create_all(engine)
+    
+    # Load 2016 data
+    insert_query = "INSERT INTO us_election_results (id,year,state_name,county_fips,county_name,votes_gop,votes_dem,total_votes,diff,per_gop,per_dem,per_point_diff) VALUES (:id,:year,:state_name,:county_fips,:county_name,:votes_gop,:votes_dem,:total_votes,:diff,:per_gop,:per_dem,:per_point_diff)"
+    print(insert_query)
+
+    with open('static/Resources/2016_US_County_Level_Presidential_Results_sql.csv', 'r', encoding="utf-8") as csvfile:
+        csv_reader = csv.reader(csvfile, delimiter=',')
+        next(csv_reader)
+        engine.execute(
+            insert_query,
+            [{"id": row[0], "year": 2016, "state_name": row[1], "county_fips": row[2], "county_name": row[3], "votes_gop": row[4], "votes_dem": row[5], "total_votes": row[6], "diff": row[7], "per_gop": row[8], "per_dem": row[9], "per_point_diff": row[10]}
+                for row in csv_reader]
+        )
+        # Create our session (link) from Python to the DB
+        #session = Session(engine)
+
+    sel = [UsElectionResult.id, UsElectionResult.year, UsElectionResult.state_name, UsElectionResult.county_fips, UsElectionResult.county_name, UsElectionResult.votes_gop,\
+        UsElectionResult.votes_dem, UsElectionResult.votes_dem, UsElectionResult.total_votes, UsElectionResult.diff ]
+
+    data_2016_db = session.query(*sel).\
+                        filter(UsElectionResult.year == 2016).order_by(UsElectionResult.total_votes.desc()).all()
+    # Save the query results as a Pandas DataFrame
+    data_2016_df = pd.DataFrame( data_2016_db )
+
+    print(data_2016_df.head())
+
+    # Load 2020 data
+    insert_query = "INSERT INTO us_election_results (id,year,state_name,county_fips,county_name,votes_gop,votes_dem,total_votes,diff,per_gop,per_dem,per_point_diff) VALUES (:id,:year,:state_name,:county_fips,:county_name,:votes_gop,:votes_dem,:total_votes,:diff,:per_gop,:per_dem,:per_point_diff)"
+    print(insert_query)
+
+    with open('static/Resources/2020_US_County_Level_Presidential_Results_sql.csv', 'r', encoding="utf-8") as csvfile:
+        csv_reader = csv.reader(csvfile, delimiter=',')
+        next(csv_reader)
+        engine.execute(
+            insert_query,
+            [{"id": row[0], "year": 2020, "state_name": row[1], "county_fips": row[2], "county_name": row[3], "votes_gop": row[4], "votes_dem": row[5], "total_votes": row[6], "diff": row[7], "per_gop": row[8], "per_dem": row[9], "per_point_diff": row[10]}
+                for row in csv_reader]
+        )
+        # Create our session (link) from Python to the DB
+        #session = Session(engine)
+
+    sel = [UsElectionResult.id, UsElectionResult.year, UsElectionResult.state_name, UsElectionResult.county_fips, UsElectionResult.county_name, UsElectionResult.votes_gop,\
+        UsElectionResult.votes_dem, UsElectionResult.votes_dem, UsElectionResult.total_votes, UsElectionResult.diff ]
+
+    data_2020_db = session.query(*sel).\
+                        filter(UsElectionResult.year == 2020).order_by(UsElectionResult.total_votes.desc()).all()
+    # Save the query results as a Pandas DataFrame
+    data_2020_df = pd.DataFrame( data_2020_db )
+
+    print(data_2020_df.head())
 
     return redirect("/", code=302)
 
