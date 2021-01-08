@@ -30,9 +30,9 @@ globalThis.selectedGopCandidate = gopCandidate[0];
 var svgArea = d3.select("body").select("scaling-svg-container");
 
 // Clear SVG is Not Empty
-if (!svgArea.empty()) {
-    svgArea.remove();
-}
+//if (!svgArea.empty()) {
+svgArea.remove();
+//}
 
 console.log(selectedYear);
 function optionChanged(newYear) {
@@ -40,9 +40,9 @@ function optionChanged(newYear) {
     var svgArea = d3.select("body").select("scaling-svg-container");
 
     // Clear SVG is Not Empty
-    if (!svgArea.empty()) {
-        svgArea.remove();
-    }
+    //if (!svgArea.empty()) {
+    svgArea.remove();
+    //}
     
     selectedYear = parseInt(newYear);
     console.log(selectedYear);
@@ -71,7 +71,8 @@ year.forEach((sample) => {
 })?.catch(function(error) {
     console.log(error);
 });*/
-// default view for map
+
+
 const measure = 'countywinrate';
 
 // define data and its attributes
@@ -167,11 +168,23 @@ let gop_votes;
 let dem_votes;
 let gop_share;
 let dem_share;
+// default view for map
+// If SVG Area is not Empty When Browser Loads, Remove & Replace with a Resized Version of Chart
+//var svgArea = d3.select("body").select("scaling-svg-container").select("svg");
+// If SVG Area is not Empty When Browser Loads, Remove & Replace with a Resized Version of Chart select("body").select("scaling-svg-container").
+var gArea = d3.select("g");
+//select("col-md-12 col-xs-12")
+// Clear SVG is Not Empty
+//if (!svgArea.empty()) {
+gArea.remove();
+//}
 
 // start DOM manipulation
 // create svg element
 const svg = d3.select("svg")
     .attr("viewBox", [0, 0, width, height]);
+
+//svg.remove();
 
 const g = svg.append("g");
 
